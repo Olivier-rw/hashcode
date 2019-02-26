@@ -1,4 +1,5 @@
-from endpoint import Endpoint
+from endpoint import Endpoint, Cache
+
 f = open('final_practice.txt', 'r')
 first_line = f.readline().split()
 t_videos, t_endpoints, t_request, t_caches, c_capacity = list(map(int, first_line))
@@ -8,6 +9,10 @@ v_sizes = list(map(int, f.readline().split()))
 print(v_sizes)
 endpoints = []
 cashes_list = []
+
+for i in range(t_caches):
+    cashes_list.append(Cache(c_capacity))
+
 for i in range(t_endpoints):
     temp = list(map(int, f.readline().split()))
     temp_object = Endpoint(temp[0])
@@ -30,4 +35,29 @@ for v in range(t_request):
 
 # for x in endpoints:
 #     print(x.video_requests)
+
+for x in endpoints:
+    highest_requests = list(x.video_requests.values())
+    for i in x.video_requests:
+        if len(highest_requests) != 0:
+            if x.video_requests[i] == max(highest_requests):
+                if v_sizes[i] <= c_capacity:
+                    tempppp = list(x.caches.keys())
+                    print(tempppp)
+                    if len(x.caches) != 0 and (i not in set(cashes_list[tempppp[0]].videos)):
+
+                        cashes_list[tempppp[0]].size -= v_sizes[i]
+                        cashes_list[tempppp[0]].videos.append(i)
+
+count = 0
+for x in cashes_list:
+    if x.size != c_capacity:
+        count += 1
+
+    print(x.videos)
+
+print(count)
+
+
+
 
