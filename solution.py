@@ -56,8 +56,12 @@ for x in cashes_list:
 
     print(x.videos)
 
-print(count)
+output = open("output.txt", "a")
+output.write(str(count) + '\n')
 
+for x in range(len(cashes_list)):
+    output.write(str(x) + ' ' + ' '.join(str(i) for i in cashes_list[x].videos) + '\n')
+    
 
 
 
